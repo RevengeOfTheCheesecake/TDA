@@ -1,6 +1,6 @@
 # Topological Data Analysis Trading Strategy - Definitions & Glossary
 
-**Last Updated**: Phase 3 Complete
+**Last Updated**: Phase 4 Complete (Cross-Market Validation)
 **Purpose**: Quick reference for technical terms, mathematical notation, and key concepts
 
 ---
@@ -230,6 +230,51 @@ Dynamic regime detection using rolling statistics.
 - **ROC**: Receiver Operating Characteristic (for classification)
 - **AUC**: Area Under Curve (ROC curve, crisis detection metric)
 - **SSRN**: Social Science Research Network (preprint repository)
+- **FTSE**: Financial Times Stock Exchange (UK benchmark index)
+- **DAX**: Deutscher Aktienindex (German stock index)
+- **BTC**: Bitcoin
+- **ETH**: Ethereum
+
+---
+
+## Cross-Market & External Validity Terms (Phase 4)
+
+### **External Validity**
+The extent to which research findings generalize to other settings, populations, or conditions.
+- **Our test**: Does US sector-topology finding hold in UK, Germany, Japan, and crypto markets?
+- **Why it matters**: Many trading strategies fail when applied to new markets (data mining)
+- **Our result**: Correlation-CV relationship holds globally (ρ = -0.82 vs -0.87 US-only)
+
+### **Cross-Market Validation**
+Testing strategy/findings on different geographic markets or asset classes.
+- **Markets tested**: US (7 sectors), UK (FTSE), Germany (DAX), Japan (Nikkei), Crypto
+- **Key finding**: 9/11 markets are "trading viable" (ρ > 0.5, CV < 0.6)
+- **Implication**: Results are robust, not US-specific
+
+### **International Equities**
+Stocks traded on non-US exchanges.
+- **FTSE 100**: UK large-cap index (15 stocks tested)
+- **DAX 40**: German blue-chip index (15 stocks tested)
+- **Nikkei 225**: Japanese benchmark index (15 stocks tested)
+- **Result**: Comparable stability to US sectors (CV ≈ 0.45-0.50)
+
+### **Cryptocurrency Market**
+Decentralized digital assets traded 24/7 globally.
+- **Tested**: BTC, ETH, BNB, XRP, ADA, DOGE, SOL, MATIC, DOT, LTC, AVAX, LINK (12 total)
+- **Characteristics**: 3-5× higher volatility, 24/7 trading, BTC-driven correlations
+- **Result**: Lower correlations (ρ = 0.463) → Higher CV (0.587), still marginally viable
+
+### **Trading Viability Criteria** (from Phase 2 & 4)
+Thresholds for determining if TDA-based trading will work:
+- ✅ **Good**: ρ > 0.5 AND CV < 0.6 (9/11 markets meet this)
+- 🟡 **Marginal**: ρ > 0.4 OR CV < 0.7 (2/11 markets)
+- ❌ **Poor**: ρ < 0.4 AND CV > 0.7 (0/11 markets)
+
+### **Generalization**
+Whether relationships/findings hold across different contexts.
+- **What generalizes**: Correlation-CV relationship (ρ = -0.82 globally)
+- **What doesn't**: Absolute Sharpe ratios (need local calibration)
+- **Implication**: Core mechanism is universal, but parameters need tuning
 
 ---
 
@@ -288,8 +333,12 @@ Dynamic regime detection using rolling statistics.
 - Figure 8.3: Ensemble portfolio analysis
 - **Subtotal**: 3 figures
 
-### **Phase 4: Cross-Market** (upcoming)
-- Expected: 3-4 figures (international, crypto, commodities)
+### **Phase 4: Cross-Market Validation**
+- Figure 9.1: Correlation-CV scatter plot (all 11 markets)
+- Figure 9.2: Asset class comparison (3 panels)
+- Figure 9.3: Trading viability heatmap
+- Figure 9.4: Regional comparison (2 panels)
+- **Subtotal**: 4 figures
 
 ### **Phase 5: ML Integration** (upcoming)
 - Expected: 3-4 figures (feature importance, ROC curves, predictions)
@@ -297,8 +346,9 @@ Dynamic regime detection using rolling statistics.
 ### **Phase 6: Theory** (upcoming)
 - Expected: 2-3 figures (eigenvalue distributions, spectral gaps)
 
-### **TOTAL EXPECTED**: 18-21 figures
-**For 70-80 pages**: This is appropriate (1 figure per 4 pages)
+### **TOTAL SO FAR**: 14 figures (Phases 1-4 complete)
+### **TOTAL EXPECTED**: 20-24 figures (with Phases 5-6)
+**For 70-80 pages**: This is appropriate (1 figure per 3-4 pages)
 
 ---
 
@@ -310,7 +360,7 @@ Dynamic regime detection using rolling statistics.
 | **Phase 1** | Increase sample size | CV reduction | 32% more stable |
 | **Phase 2** | Sector homogeneity | Positive Sharpe | +0.79 (works!) |
 | **Phase 3** | Test robustness | Multiple variants | 3/4 succeed |
-| **Phase 4** | External validity | Cross-market | Generalization |
+| **Phase 4** | External validity | Cross-market | ρ = -0.82 globally (validates!) |
 | **Phase 5** | State-of-art | ML comparison | Modern methods |
 | **Phase 6** | Theory | Mathematical | Why it works |
 
@@ -345,8 +395,12 @@ First evidence that TDA can generate profitable trading signals (previous work o
 - Capacity-constrained (~$50-100M max)
 - Regime-dependent (tested on 2023-2024 only)
 
+**Cross-Market Validation (Phase 4 - COMPLETE):**
+- Tested on 11 markets: US (7 sectors), International (3 countries), Crypto (1 market)
+- **Key finding**: Correlation-CV relationship generalizes globally (ρ = -0.82)
+- 9/11 markets are "trading viable" (ρ > 0.5, CV < 0.6)
+
 **Next Steps:**
-- Test on international markets, crypto (Phase 4)
 - Compare to ML approaches (Phase 5)
 - Develop mathematical theory (Phase 6)
 
