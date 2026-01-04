@@ -164,7 +164,7 @@ for market_code, market_info in international_markets.items():
     actual_corr = upper_tri.stack().mean()
 
     # Compute topology
-    distance_matrix = np.sqrt(2 * (1 - corr_matrix))
+    distance_matrix = np.sqrt(2 * (1 - corr_matrix.values))  # Convert to numpy array
     result = ripser(distance_matrix, distance_matrix=True, maxdim=1)
 
     diagrams = result['dgms']
@@ -223,7 +223,7 @@ upper_tri = corr_matrix.where(np.triu(np.ones_like(corr_matrix), k=1).astype(boo
 crypto_corr = upper_tri.stack().mean()
 
 # Topology
-distance_matrix = np.sqrt(2 * (1 - corr_matrix))
+distance_matrix = np.sqrt(2 * (1 - corr_matrix.values))  # Convert to numpy array
 result = ripser(distance_matrix, distance_matrix=True, maxdim=1)
 
 diagrams = result['dgms']
