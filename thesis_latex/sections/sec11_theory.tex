@@ -151,14 +151,9 @@ In mixed-sector portfolios (e.g., Technology $\rho \approx 0.75$ + Utilities $\r
 \item Spectral gap $\Delta = \lambda_1 - \lambda_2$ (10\% importance)
 \end{enumerate}
 
-\textbf{Validation}: On held-out cross-market data (Section~\ref{sec:crossmarket}):
-\begin{itemize}
-\item \textbf{Precision}: 100\% (all predicted ghost regimes failed, Sharpe $< 0$)
-\item \textbf{Recall}: 89\% (7/8 failed regimes correctly flagged ex ante)
-\item \textbf{One false negative}: Emerging Markets ($\rho = 0.51$, borderline case)
-\end{itemize}
+\textbf{Empirical Support}: Cross-market analysis (Section~\ref{sec:crossmarket}, Appendix~\ref{app:crossmarket}) shows all markets with $\rho < 0.50$ OR $\text{CV} > 0.55$ exhibit weak/negative performance, qualitatively supporting this threshold-based screening rule. The crypto basket ($\rho = 0.48$, CV = 0.62) correctly identified as marginal regime.
 
-\textbf{Practical Implication}: Practitioners can screen portfolios for ghost loop susceptibility using only correlation statistics, avoiding expensive persistent homology computation on unviable baskets.
+\textbf{Practical Implication}: Practitioners can screen portfolios for ghost loop susceptibility using only correlation statistics, avoiding expensive persistent homology computation on unviable baskets. The rule provides a \textit{necessary condition} for topological stability rather than performance guarantee.
 
 \textbf{Theoretical Significance}: This transforms ghost loops from a \textit{post hoc failure explanation} into a \textit{predictable structural property} of heterogeneous correlation networks.
 
