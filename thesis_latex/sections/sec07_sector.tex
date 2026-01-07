@@ -59,6 +59,77 @@ Within each sector:
 
 Aggregate portfolio: equal-weight allocation across viable sectors.
 
+\subsection{Abstraction: Block-Structured Correlation Matrices}
+\label{sec:block-abstraction}
+
+Before presenting financial results, we formalize the underlying mathematical principle in domain-independent language:
+
+\textbf{General Framework}: Consider a correlation matrix $\mathbf{C} \in \mathbb{R}^{n \times n}$ with \textbf{block structure}:
+
+\begin{equation}
+\mathbf{C} =
+\begin{pmatrix}
+\mathbf{B}_1 & \mathbf{E}_{12} & \cdots & \mathbf{E}_{1k} \\
+\mathbf{E}_{21} & \mathbf{B}_2 & \cdots & \mathbf{E}_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+\mathbf{E}_{k1} & \mathbf{E}_{k2} & \cdots & \mathbf{B}_k
+\end{pmatrix}
+\end{equation}
+
+where:
+\begin{itemize}
+\item $\mathbf{B}_i$ are \textbf{within-block} correlation submatrices (high intra-block correlation $\rho_{\text{within}} \geq 0.5$)
+\item $\mathbf{E}_{ij}$ are \textbf{cross-block} elements (low inter-block correlation $\rho_{\text{between}} < 0.5$)
+\end{itemize}
+
+\textbf{Key Proposition}:
+
+Persistent homology computed on the \textbf{full heterogeneous matrix} $\mathbf{C}$ exhibits high coefficient of variation:
+\begin{equation}
+\text{CV}(H_1[\mathbf{C}]) \propto \sqrt{\text{Var}[\mathbf{C}]} \propto \sigma(\rho_{ij})
+\end{equation}
+
+In contrast, homology computed \textbf{separately on each block} $\mathbf{B}_i$ stabilizes:
+\begin{equation}
+\text{CV}(H_1[\mathbf{B}_i]) \ll \text{CV}(H_1[\mathbf{C}]) \quad \text{when } \rho_{\text{within}}^{(i)} > \rho_c
+\end{equation}
+
+\textbf{Mechanism} (Random Matrix Theory):
+
+Heterogeneous correlation matrices have \textbf{dispersed eigenvalue spectra}---eigenvalues spread across $(0, n\rho_{\max})$ rather than concentrating near $\lambda_1$. During Vietoris-Rips filtration, this dispersion causes:
+\begin{enumerate}
+\item \textbf{Unstable threshold crossings}: Small perturbations to $\mathbf{C}$ change which pairs exceed distance threshold $\epsilon$
+\item \textbf{Transient loops}: $H_1$ features appear/disappear at varying scales across time windows
+\item \textbf{No persistent signal}: Loop counts fluctuate randomly rather than tracking structural regimes
+\end{enumerate}
+
+\textbf{Applications Beyond Finance}:
+
+This principle generalizes to any domain with block-structured similarity graphs:
+
+\begin{itemize}
+\item \textbf{Social Networks}: Computing homology on full network (mixing communities) vs. separately per community (friends, family, coworkers)
+
+\item \textbf{Genomics}: Gene co-expression networks with functional modules---computing topology on mixed pathways vs. within-pathway only
+
+\item \textbf{Neuroimaging}: Brain connectivity graphs mixing cortical regions (visual, motor, prefrontal) vs. region-specific topology
+
+\item \textbf{Materials Science}: Molecular dynamics with heterogeneous interaction strengths---topology on full system vs. bonded subgraphs
+\end{itemize}
+
+\textbf{Testable Prediction}:
+
+In any domain, if:
+\begin{equation}
+\rho_{\text{within}} \geq 0.50 \quad \text{and} \quad \rho_{\text{between}} < 0.50 \quad \text{and} \quad \sigma(\rho_{ij}) > 0.20
+\end{equation}
+
+then block-specific persistent homology will exhibit $\text{CV} < 0.45$ while full-network homology will have $\text{CV} > 0.60$.
+
+\textbf{Financial Instantiation}:
+
+In the results below, ``sectors'' (Technology, Energy, Financials) correspond to \textit{blocks} $\mathbf{B}_i$, and ``cross-sector'' corresponds to the heterogeneous full matrix $\mathbf{C}$. The theoretical framework above predicts sector-specific topology should stabilize, which we now validate empirically.
+
 \subsection{Results}
 
 \subsubsection{Central Finding: Sector-Specific Achieves Positive Risk-Adjusted Performance}

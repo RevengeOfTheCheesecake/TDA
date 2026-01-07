@@ -94,6 +94,74 @@ where $q = n/T$ (ratio of stocks to time observations).
 
 \textbf{Conclusion}: Spectral gap \textbf{strongly predicts} topology stability. This is the mathematical mechanism: correlation $\rightarrow$ eigenvalue concentration $\rightarrow$ topology stability.
 
+\subsection{Ghost Loop Regime: Definition and Ex Ante Detection}
+\label{sec:ghost-loops}
+
+\subsubsection{Formal Definition}
+
+\textbf{Definition (Ghost Loop Regime):}
+
+A correlation network exhibits the \textbf{ghost loop regime} when persistent $H_1$ features arise from noise amplification in heterogeneous correlation structures rather than genuine market regime shifts. Formally, ghost loops occur when:
+
+\begin{equation}
+\text{CV}(H_1) > \tau_{\text{ghost}} \quad \text{and} \quad \rho < \rho_c
+\end{equation}
+
+where $\tau_{\text{ghost}} \approx 0.55$ (empirical threshold) and $\rho_c \approx 0.50$ (critical correlation).
+
+\textbf{Behavioral Characteristics:}
+
+\begin{enumerate}
+\item \textbf{High temporal variability}: Loop counts fluctuate dramatically ($\text{CV} > 0.55$) due to sampling noise rather than regime changes
+
+\item \textbf{Random matrix proximity}: Eigenvalue spectrum resembles Marchenko-Pastur distribution ($\lambda_1 / \text{MP}_{\max} < 1.5$)
+
+\item \textbf{Low spectral gap}: $\Delta = \lambda_1 - \lambda_2 < 2.0$, indicating no dominant eigenmode
+
+\item \textbf{Correlation heterogeneity}: Standard deviation of pairwise correlations $\sigma(\rho_{ij}) > 0.20$
+\end{enumerate}
+
+\textbf{Mechanism:}
+
+In mixed-sector portfolios (e.g., Technology $\rho \approx 0.75$ + Utilities $\rho \approx 0.35$), the distance matrix exhibits:
+\begin{itemize}
+\item Unstable threshold crossings during Vietoris-Rips filtration
+\item Loops that appear/disappear due to small correlation perturbations
+\item No persistent topological signal tied to market regimes
+\end{itemize}
+
+\subsubsection{Ex Ante Prediction}
+
+\textbf{Key Result}: Ghost loops can be \textbf{predicted before computing persistent homology} using only correlation matrix diagnostics.
+
+\textbf{Prediction Rule} (no TDA required):
+
+\begin{equation}
+\text{Ghost Loop Indicator} =
+\begin{cases}
+1 & \text{if } \rho < 0.50 \text{ or } \sigma(\rho_{ij}) > 0.20 \text{ or } \Delta < 2.0 \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+
+\textbf{Predictive Variables} (in order of importance, from Section~\ref{sec:ml}):
+\begin{enumerate}
+\item Correlation dispersion $\sigma(\rho_{ij})$ (21\% feature importance)
+\item Mean correlation $\rho$ (13\% importance)
+\item Spectral gap $\Delta = \lambda_1 - \lambda_2$ (10\% importance)
+\end{enumerate}
+
+\textbf{Validation}: On held-out cross-market data (Section~\ref{sec:crossmarket}):
+\begin{itemize}
+\item \textbf{Precision}: 100\% (all predicted ghost regimes failed, Sharpe $< 0$)
+\item \textbf{Recall}: 89\% (7/8 failed regimes correctly flagged ex ante)
+\item \textbf{One false negative}: Emerging Markets ($\rho = 0.51$, borderline case)
+\end{itemize}
+
+\textbf{Practical Implication}: Practitioners can screen portfolios for ghost loop susceptibility using only correlation statistics, avoiding expensive persistent homology computation on unviable baskets.
+
+\textbf{Theoretical Significance}: This transforms ghost loops from a \textit{post hoc failure explanation} into a \textit{predictable structural property} of heterogeneous correlation networks.
+
 \subsection{Theoretical Bound Derivation}
 
 \subsubsection{Informal Theorem}
@@ -106,6 +174,13 @@ For a correlation matrix $\mathbf{C}$ with mean correlation $\rho \in [0, 1]$, t
 \label{eq:cv-bound}
 \end{equation}
 where $\alpha > 0$ is a constant depending on dimensionality $n$.
+
+\textbf{Important Caveats}:
+\begin{itemize}
+\item This bound is \textbf{sufficient but not necessary}---violating it guarantees instability, but satisfying it does not guarantee stability
+\item The bound is \textbf{not tight}---observed CV values are typically 3--10$\times$ smaller than the bound (see Table~\ref{tab:cv-bound-validation})
+\item Tighter bounds incorporating spectral gap and correlation dispersion remain an open question
+\end{itemize}
 
 \textbf{Intuition}:
 \begin{itemize}
@@ -619,6 +694,57 @@ Mathematical foundations validate the empirical correlation-stability relationsh
 \item \textbf{Novel connection} between spectral graph theory and TDA
 \item \textbf{Practical alternative}: Fiedler value as proxy for expensive topology computation
 \end{itemize}
+
+\subsection{Limitations and Open Questions}
+\label{sec:theory-limitations}
+
+While our theoretical framework successfully explains the correlation-stability relationship, several limitations and open questions remain:
+
+\subsubsection{Theoretical Gaps}
+
+\begin{enumerate}
+\item \textbf{Bound Tightness}: The derived bound $\text{CV}(H_1) \leq \alpha/\sqrt{\rho(1-\rho)}$ is conservative (observed values 3--10$\times$ smaller). A tighter bound incorporating correlation dispersion $\sigma(\rho_{ij})$ and spectral gap $\Delta$ would improve predictive power.
+
+\item \textbf{Static Networks Only}: Our analysis assumes \textbf{stationary} correlation structure within 60-day windows. Extension to time-varying correlation networks (e.g., regime-switching models, dynamic conditional correlation) remains unexplored.
+
+\item \textbf{Gaussian Assumption}: Random matrix theory results assume Gaussian returns. Heavy-tailed distributions (e.g., Student-$t$, stable Lévy) may violate eigenvalue concentration, requiring non-Gaussian random matrix extensions.
+
+\item \textbf{Vietoris-Rips Specific}: Our results apply to Vietoris-Rips filtration on correlation distance. Alternative constructions (alpha complexes, witness complexes, Čech complexes) may exhibit different stability properties.
+\end{enumerate}
+
+\subsubsection{Empirical Scope}
+
+\begin{enumerate}
+\item \textbf{Asset Class Coverage}: Validation limited to equities and cryptocurrencies. Fixed income, commodities, and options may have different correlation-topology relationships due to different market microstructures.
+
+\item \textbf{Sample Period}: Data spans 2019--2024 (including COVID, 2022 bear, AI rally). Results may not generalize to other macro regimes (e.g., 1980s inflation, dot-com bubble, 2008 crisis).
+
+\item \textbf{Universe Size}: Tested on $n = 20$--30 assets. Scaling to S\&P 500 ($n = 500$) introduces computational challenges and may alter correlation-CV dynamics due to increased heterogeneity.
+\end{enumerate}
+
+\subsubsection{Practical Extensions}
+
+\begin{enumerate}
+\item \textbf{Multivariate Prediction}: Current ghost loop indicator uses univariate thresholds ($\rho < 0.50$ or $\sigma(\rho) > 0.20$). A multivariate logistic regression combining all spectral diagnostics could improve precision/recall.
+
+\item \textbf{Dynamic $\rho_c$}: Critical threshold $\rho_c \approx 0.50$ may vary with market regime. Conditional thresholds (e.g., $\rho_c = 0.45$ in high volatility, $\rho_c = 0.55$ in calm periods) warrant investigation.
+
+\item \textbf{Higher-Order Homology}: Analysis focuses on $H_1$ (loops). $H_2$ (voids) and higher-order Betti numbers may capture different regime structures, especially in high-dimensional portfolios.
+
+\item \textbf{Causal Mechanisms}: While we establish correlation $\rightarrow$ eigenvalue concentration $\rightarrow$ topology stability, the underlying economic drivers (sectoral shocks, liquidity cascades, volatility clustering) remain under-theorized.
+\end{enumerate}
+
+\subsubsection{Reproducibility and Generalization}
+
+\begin{enumerate}
+\item \textbf{Out-of-Sample Regions}: Cross-market validation (Section~\ref{sec:crossmarket}) covers US, UK, Japan, and emerging markets. Testing on Latin America, Africa, or frontier markets would further validate universality claims.
+
+\item \textbf{Alternative Topology Software}: Results use \texttt{ripser} library. Verification with \texttt{GUDHI}, \texttt{Dionysus}, or \texttt{giotto-tda} would confirm implementation robustness.
+
+\item \textbf{Alternative Correlation Estimators}: We use Pearson correlation. Robust estimators (Kendall's tau, Ledoit-Wolf shrinkage, graphical lasso) may alter ghost loop prevalence.
+\end{enumerate}
+
+\textbf{Future Research Priority}: Items 1 (tighter bound), 2 (dynamic networks), and 8 (causal mechanisms) represent the most impactful theoretical extensions.
 
 \textbf{Reconciliation with Earlier Sections}:
 
