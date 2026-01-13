@@ -333,51 +333,6 @@ This inequality transforms the empirical correlation-stability relationship ($\r
 \item $\times$ Extreme crisis ($\rho > 0.95$)---correlations already signal stress
 \end{itemize}
 
-\subsubsection{For Students and Educators}
-
-\textbf{This thesis as a template}:
-\begin{enumerate}
-\item \textbf{Three-pillar framework} (Empirical + Algorithmic + Theoretical)---rare in quant finance
-\item \textbf{Honest failure reporting} (Sections 6, 10 acknowledge negative results)
-\item \textbf{Reproducible science} (19 Python scripts, Google Colab ready)
-\end{enumerate}
-
-\textbf{Pedagogical value}:
-\begin{itemize}
-\item Demonstrates how to \textbf{diagnose strategy failure} (Section 6 $\rightarrow$ Section 7 pivot)
-\item Shows \textbf{conservative interpretation} of ML results (AUC $\approx 0.52$ acknowledged)
-\item Illustrates \textbf{theoretical grounding} after empirical discovery (not before)
-\end{itemize}
-
-\textbf{Suggested course projects}:
-\begin{itemize}
-\item Replicate Section 7 on different markets (Europe, Asia, commodities)
-\item Test alternative homology dimensions ($H_2$, $H_3$) for failure analysis
-\item Compare TDA to \textbf{Graph Neural Networks} (modern alternative)
-\end{itemize}
-
-\subsection{Final Reflection: What TDA Teaches Us About Markets}
-
-Beyond profitability metrics and Sharpe ratios, this research reveals a deeper insight:
-
-\begin{quote}
-\textbf{Markets are not just collections of pairwise correlations---they have shape.}
-\end{quote}
-
-Traditional risk models (Markowitz portfolios, VaR) treat markets as \textbf{correlation matrices}: flat arrays of numbers with no higher-order structure. This thesis demonstrates that \textbf{network topology}---the pattern of connections, loops, and components---contains information that correlation matrices miss.
-
-But that information is \textbf{fragile}. It only emerges when the underlying network has sufficient \textbf{homogeneity} (high within-group correlation). Mix heterogeneous assets, and the topology becomes noise. This fragility explains why prior TDA-finance work found ``interesting visualizations'' but not ``tradeable signals.''
-
-\textbf{The boundary condition $\rho > 0.5$} is not arbitrary---it reflects a \textbf{phase transition} in random graph theory. Below this threshold, networks are sparse and topology unstable. Above it, eigenvalue concentration creates detectable, persistent structure.
-
-\textbf{The practical implication}: TDA is not a universal solution for financial prediction. It is a \textbf{specialized tool} for \textbf{homogeneous, high-correlation regimes}---exactly the environments where traditional diversification fails and investors need early warning systems most.
-
-\textbf{The theoretical implication}: The correlation-stability relationship (CV $\leq \alpha/\sqrt{\rho(1-\rho)}$) suggests topology stability is a \textbf{spectral phenomenon}, not a topological one. The Fiedler value correlation ($\rho = -0.99$ with topology CV) hints that persistent homology may be \textbf{over-engineering} the problem---simpler graph Laplacian eigenvalues capture the same information 50$\times$ faster.
-
-This raises a provocative question for future research: \textbf{Is persistent homology the right tool, or just the first tool we tried?}
-
-Perhaps the true contribution of this thesis is not ``TDA works for trading'' but rather ``\textbf{market structure is detectable, and correlation homogeneity determines detectability}.'' Whether we measure that structure with $H_1$ persistence, Fiedler values, or some yet-undiscovered metric may be less important than recognizing that \textbf{structure exists} and has \textbf{predictable boundary conditions}.
-
 \subsection{Closing Statement}
 
 This thesis set out to answer whether topology can generate profitable trading signals. The answer---\textbf{yes, under specific correlation conditions}---is simultaneously more constrained and more profound than anticipated.
@@ -392,19 +347,6 @@ For the field of quantitative finance, this work demonstrates that \textbf{topol
 
 The shape of markets is real. We now know when, where, and why it matters.
 
-\subsection{What I Would Do Next}
+\subsection{Future Directions}
 
-\textbf{Feedback applied: One-paragraph design insights (not more experiments)}
-
-If continuing this research, I would focus on three architectural directions:
-
-\paragraph{1. Multi-Horizon Regime Classifiers}
-Rather than binary stable/unstable classification, develop a continuous ``regime intensity'' score combining daily topology volatility (short-term) with monthly eigenvalue concentration (long-term). This would enable gradual position scaling rather than binary cash/invested decisions.
-
-\paragraph{2. Fiedler Value as Real-Time Proxy}
-Section~\ref{sec:theory} demonstrates Fiedler value (graph Laplacian $\lambda_2$) correlates $\rho = -0.99$ with topology CV while computing 50$\times$ faster. For intraday applications, replacing persistent homology with Fiedler-based regime detection could enable real-time risk monitoring without computational bottlenecks.
-
-\paragraph{3. Topology as Feature Selector for Multi-Strategy Portfolios}
-Rather than using topology to generate standalone trading signals, deploy it as a \textit{meta-filter} for existing strategies: scale exposure to momentum/value/quality factors based on topological regime stability. This leverages topology's strength (regime detection) while avoiding its weakness (weak directional prediction).
-
-\textbf{Common thread}: These extensions recognize topology's value lies in \textit{structural framework design}, not incremental alpha generation.
+Three architectural improvements would strengthen this framework: (1) \textbf{Multi-horizon regime classifiers} using continuous ``regime intensity'' scores rather than binary classification; (2) \textbf{Fiedler value as real-time proxy}, enabling 50$\times$ faster regime detection for intraday applications; and (3) \textbf{Topology as meta-filter} for existing factor strategies (momentum, value, quality), leveraging its strength in regime detection while avoiding weak directional prediction. All code is available at \url{https://github.com/adam-jfkhs/TDA} for replication and extension.
