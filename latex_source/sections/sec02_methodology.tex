@@ -39,7 +39,20 @@ Portfolio construction follows market-neutral mean reversion logic: long positio
 
 \subsection{Regime Detection: Persistent Homology}
 
-Persistent homology analyzes topological features of correlation structure following the methodology established by Gidea and Katz (2018). Implementation uses Vietoris-Rips filtration on correlation distance metric:
+Persistent homology analyzes topological features of correlation structure following the methodology established by Gidea and Katz (2018). Implementation uses Vietoris-Rips filtration on correlation distance metric.
+
+\subsubsection{Algorithm Summary}
+
+\begin{enumerate}
+\item \textbf{Window:} Each computation uses 60 days of daily log returns
+\item \textbf{Correlation:} Compute pairwise correlation matrix $\rho_{ij}$ for all assets
+\item \textbf{Distance:} Convert to distance matrix: $d_{ij} = \sqrt{2(1 - \rho_{ij})}$
+\item \textbf{Topology:} Run persistent homology (dimension 1) using \texttt{ripser}; extract $H_1$ lifetimes
+\item \textbf{Stability:} $\text{CV}(H_1) = \text{std(lifetimes)} / \text{mean(lifetimes)}$
+\item \textbf{Regime:} Classify as ``unstable'' if 30-day rolling CV exceeds 75th percentile
+\end{enumerate}
+
+\subsubsection{Mathematical Details}
 
 Convert correlation matrix to distance metric:
 

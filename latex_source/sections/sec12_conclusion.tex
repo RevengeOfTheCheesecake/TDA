@@ -109,15 +109,15 @@ This inequality transforms the empirical correlation-stability relationship ($\r
 \item Macocco et al. (2023): TDA + ML for crypto (limited validation)
 \end{itemize}
 
-\textbf{Our Four Firsts}:
+\textbf{Contributions (to our knowledge)}:
 \begin{enumerate}
-\item \checkmark \textbf{First profitable TDA trading strategy} (Sharpe $+0.79$ post-cost, walk-forward validated)
-\item \checkmark \textbf{First cross-market simulation study} (11 scenarios demonstrating theoretical generalization potential)
-\item \checkmark \textbf{First rigorous TDA vs ML comparison} (feature importance, conservative AUC interpretation)
-\item \checkmark \textbf{First theoretical bound} relating correlation to topology stability
+\item \checkmark \textbf{Among the first TDA strategies with positive out-of-sample performance} (Sharpe $+0.79$, risk-adjusted, net of costs, walk-forward validated)
+\item \checkmark \textbf{Cross-market simulation study} (11 scenarios demonstrating theoretical generalization potential)
+\item \checkmark \textbf{Rigorous TDA vs ML comparison} (feature importance, conservative AUC interpretation)
+\item \checkmark \textbf{Theoretical bound} relating correlation to topology stability
 \end{enumerate}
 
-\textbf{Novel Methodological Insight}: \textbf{Sector homogeneity is critical}. Prior work computed topology on market-wide baskets (all stocks together), which our Section 7 results show produces unstable features (CV = 0.68). Computing topology \textbf{separately per sector} is the key innovation that transforms TDA from ``interesting visualization'' to ``tradeable signal.''
+\textbf{Key Methodological Insight}: \textbf{Sector homogeneity appears critical}. Prior work computed topology on market-wide baskets (all stocks together), which our Section 7 results show produces unstable features (CV = 0.68). Computing topology \textbf{separately per sector} may be necessary to transform TDA from ``interesting visualization'' to ``tradeable signal.''
 
 \subsubsection{Practical Contribution}
 
@@ -165,6 +165,21 @@ This inequality transforms the empirical correlation-stability relationship ($\r
 \item $\times$ Pure directional alpha (AUC $\approx 0.52$, insufficient predictability)
 \item $\times$ High-frequency trading (transaction costs dominate)
 \end{itemize}
+
+\subsection{Threats to Interpretation}
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\textbf{What These Results Do NOT Imply:}
+\begin{itemize}
+\item[$\times$] \textbf{Not directional alpha}: Topology detects \textit{when} regimes shift, not \textit{which direction} prices move (AUC $\approx 0.52$)
+\item[$\times$] \textbf{Not guaranteed profits}: Sharpe $+0.79$ is risk-adjusted and net of costs, but past performance $\neq$ future results
+\item[$\times$] \textbf{Not universally applicable}: Only works when $\rho > 0.50$; fails on heterogeneous portfolios
+\item[$\times$] \textbf{Not fully validated internationally}: Cross-market results use calibrated simulation, not live data
+\end{itemize}
+\textbf{Appropriate Use}: Risk overlay, regime detection, exposure scaling---\textit{not} standalone alpha generation.
+}}
+\end{center}
 
 \subsection{Intellectual Honesty: What We Still Don't Know}
 
