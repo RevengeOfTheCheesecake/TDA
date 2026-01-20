@@ -5,6 +5,40 @@
 
 Sections~\ref{sec:sector}---\ref{sec:ml} empirically demonstrate that \textbf{mean correlation predicts topology stability} ($\rho_{\text{correlation-CV}} \approx -0.87$ across all markets). However, a fundamental question remains: \textbf{Why does this relationship exist?}
 
+\subsection{Intuitive Summary: Why Correlation Drives Topology Stability}
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{
+\textbf{The Core Intuition} (no math required):
+
+Think of a correlation network as a web connecting stocks. High correlation means tight connections; low correlation means loose or missing connections.
+
+\textbf{Why high correlation $\rightarrow$ stable topology:}
+\begin{itemize}
+    \item \textbf{Tight web}: When all stocks are highly correlated, the web has consistent, strong connections everywhere
+    \item \textbf{Predictable holes}: Any ``loops'' (topological features) in this tight web are stable---they don't appear and disappear randomly
+    \item \textbf{Small fluctuations absorbed}: Day-to-day noise in correlations doesn't change the web's overall shape
+\end{itemize}
+
+\textbf{Why low correlation $\rightarrow$ unstable topology:}
+\begin{itemize}
+    \item \textbf{Loose web}: When correlations are weak and varied, connections keep forming and breaking
+    \item \textbf{Random holes}: Loops appear and vanish due to noise, not genuine market shifts
+    \item \textbf{Signal overwhelmed}: You can't tell real regime changes from random fluctuations
+\end{itemize}
+
+\textbf{The spectral gap connection}: The ``spectral gap'' measures how dominant the main pattern is in the correlation structure. Large gap = one dominant pattern = stable topology. Small gap = many competing patterns = unstable topology.
+
+\textbf{Practical threshold}: Below $\rho \approx 0.50$, the web becomes too loose---topology becomes noise.
+}}
+\end{center}
+
+\vspace{0.3cm}
+
+The remainder of this section formalizes these intuitions through random matrix theory and spectral graph analysis.
+
+\subsection{Technical Foundations}
+
 This section develops the \textbf{theoretical foundations} explaining the correlation-stability connection through:
 
 \begin{enumerate}

@@ -111,19 +111,19 @@ Independent Research Project
 % ==============================================================================
 
 \begin{abstract}
-\noindent \textbf{Context:} Topological data analysis (TDA) has emerged as a promising tool for quantitative finance, offering geometric approaches to market structure detection through persistent homology. In essence, topology captures the ``shape'' of relationships among assets---much like how a map captures terrain structure rather than individual coordinates. However, practical applications have remained limited, with most studies confined to visualization and post-hoc crisis analysis.
+\noindent \textbf{Context:} Topological data analysis (TDA) offers geometric approaches to analyzing market correlation structure through persistent homology. This study investigates conditions under which TDA can reliably detect market regime shifts---not to generate trading alpha, but to characterize \textit{when} correlation networks become unstable.
 
-\textbf{The Problem:} Initial validation of a graph Laplacian-persistent homology trading strategy across mixed-sector equity baskets revealed severe out-of-sample failure (Sharpe $-0.56$, $p < 0.001$), stemming from correlation heterogeneity across sectors. When stocks from Technology ($\rho \approx 0.75$) and Consumer Goods ($\rho \approx 0.35$) are combined, topological features become decoherent---exhibiting excessive temporal variation (CV $> 0.65$) that overwhelms any regime signal.
+\textbf{The Problem:} Initial application of persistent homology to mixed-sector equity baskets produced unstable topological features (CV $> 0.65$), rendering regime detection unreliable. The instability stems from correlation heterogeneity: combining assets with different baseline correlations (e.g., Technology $\rho \approx 0.75$ with Consumer Goods $\rho \approx 0.35$) creates noise that overwhelms structural signal.
 
-\textbf{The Discovery:} Through systematic investigation spanning six research phases (intraday data analysis, sector segmentation, strategy variants, cross-market simulation study, machine learning integration, and theoretical foundations), we identify a \textbf{critical correlation threshold} $\rho_c \approx 0.50$ below which topological noise dominates signal. Computing topology \textit{separately} per market sector (rather than cross-sector) produces stable features when within-sector correlation exceeds this threshold, enabling reliable regime detection.
+\textbf{The Discovery:} Through systematic investigation, we identify a \textbf{correlation homogeneity requirement}: topological features become stable and interpretable only when computed on asset groups with mean pairwise correlation $\rho > 0.50$. Below this threshold, features reflect estimation noise rather than market structure.
 
-\textbf{The Result:} Sector-specific topological strategies achieve Sharpe ratio $+0.79$ ($p < 0.001$) in U.S. equity markets. Calibrated simulation study across 11 market scenarios (7 US sectors, 3 international indices, 1 cryptocurrency basket) demonstrates that the correlation-stability pattern generalizes if international markets exhibit similar correlation structures. Machine learning confirms topology captures regime structure ($F_1 = 0.578$) though directional prediction remains weak (AUC $\approx 0.52$), consistent with efficient market limits. Theoretical analysis derives a correlation-stability bound ($\text{CV}(H_1) \leq \alpha/\sqrt{\rho(1-\rho)}$) grounded in random matrix theory and spectral graph theory, providing mathematical foundations for the empirical threshold.
+\textbf{The Result:} Computing topology \textit{within} homogeneous sectors (rather than cross-sector) yields stable features (CV $< 0.45$) that track regime shifts. Machine learning confirms topology captures regime structure ($F_1 = 0.578$) though directional prediction remains near-random (AUC $\approx 0.52$), consistent with efficient market limits on price forecasting. A theoretical bound ($\text{CV}(H_1) \leq \alpha/\sqrt{\rho(1-\rho)}$) grounded in spectral graph theory explains why correlation homogeneity is necessary for topological stability.
 
-\textbf{Contribution:} This work demonstrates conditions under which TDA can be structured into a systematic framework by: (1) identifying correlation homogeneity as a necessary condition for topological stability, (2) deriving theoretical bounds connecting correlation structure to feature stability, and (3) testing generalization potential via calibrated simulation. The findings suggest that persistent homology-based regime detection may succeed under specific boundary conditions, providing a principled methodology with theoretical foundations.
+\textbf{Contribution:} This work identifies \textbf{boundary conditions} for applying TDA to financial data: (1) correlation homogeneity as a necessary condition, (2) a practical threshold ($\rho_c \approx 0.50$) for deployment, and (3) theoretical foundations explaining the correlation-stability relationship. The framework is suited for \textit{regime detection and risk monitoring}, not directional trading.
 
 \vspace{0.1in}
 
-\noindent\textbf{Primary Contribution:} To our knowledge, among the first TDA-based frameworks demonstrating positive out-of-sample performance with theoretical foundations and simulation-based generalization study.
+\noindent\textbf{Scope:} This is exploratory research establishing necessary conditions for TDA applicability, not a validated trading system.
 \end{abstract}
 
 \clearpage
@@ -200,9 +200,9 @@ This work maintains rigorous standards:
     \item \textbf{Conservative interpretation:} Machine learning improves regime classification but not directional alpha
 \end{itemize}
 
-\subsection*{Value}
+\subsection*{Scope and Value}
 
-While the initial strategy underperforms, this comprehensive validation demonstrates professional research methodology, rigorous statistical inference, and deep understanding of when and why topological methods provide value for regime detection (not directional prediction). All code, data pipelines, and analysis notebooks are publicly available at \url{https://github.com/adam-jfkhs/TDA} for full reproducibility.
+This research establishes \textbf{boundary conditions} for TDA applicability---identifying when topological methods can reliably detect regime shifts and when they cannot. The framework is suited for \textbf{risk monitoring and regime detection}, not standalone trading alpha generation. All code, data pipelines, and analysis notebooks are publicly available at \url{https://github.com/adam-jfkhs/TDA} for full reproducibility.
 
 \clearpage
 
@@ -258,7 +258,9 @@ This thesis proceeds in two phases: an \textbf{initial failed strategy} (Section
     \item \textbf{Theoretical foundations:} Section 11 (why correlation $\rightarrow$ stability)
 \end{itemize}
 
-\textbf{For complete understanding:} The initial failure (Sections 2--5) is not wasted space---it establishes \textit{why} the boundary conditions matter and demonstrates honest scientific methodology. The length reflects evolution from failure to framework, not lack of focus.
+\textbf{For complete understanding:} The initial failure (Sections 2--5) establishes \textit{why} the boundary conditions matter and demonstrates honest scientific methodology.
+
+\textbf{Paper Structure Note:} This document presents the complete investigation. For journal submission, Sections 6 (Intraday), 8 (Variants), and detailed appendix tables would move to supplementary materials, yielding a focused 25--30 page main paper with online appendix.
 
 % This file continues...
 % For brevity showing structure - full content follows similar pattern
