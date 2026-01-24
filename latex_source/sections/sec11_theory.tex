@@ -442,6 +442,79 @@ The threshold should be treated as a \textbf{starting point for validation} in n
 }}
 \end{center}
 
+\subsubsection{Statistical Validation of Critical Threshold}
+
+To formally validate the critical correlation threshold beyond empirical observation, we perform three statistical tests:
+
+\textbf{1. Segmented Regression with Bootstrap Confidence Interval:}
+
+Using piecewise linear regression to identify optimal breakpoints in the $\rho$-CV relationship:
+\begin{itemize}
+    \item \textbf{Point estimate}: $\rho_c = 0.61$ (optimal breakpoint maximizing $R^2$)
+    \item \textbf{Bootstrap 95\% CI}: $[0.45, 0.65]$ (1,000 resamples)
+    \item \textbf{$R^2$ at breakpoint}: 0.87
+\end{itemize}
+
+\textbf{2. Chow Test for Structural Break:}
+
+Testing whether the $\rho$-CV relationship exhibits a statistically significant regime change at $\rho = 0.50$:
+\begin{itemize}
+    \item \textbf{F-statistic}: 32.33
+    \item \textbf{p-value}: $< 0.001$
+    \item \textbf{Conclusion}: Significant structural break confirmed
+\end{itemize}
+
+\textbf{3. Out-of-Sample Sector Validation:}
+
+Testing the threshold pattern on held-out US sector data:
+
+\begin{table}[H]
+\centering
+\small
+\caption{Sector Validation: Threshold Pattern Confirmation}
+\begin{tabular}{@{}lcccl@{}}
+\toprule
+\textbf{Sector} & \textbf{Mean $\rho$} & \textbf{CV($\rho < 0.5$)} & \textbf{CV($\rho \geq 0.5$)} & \textbf{Pattern} \\
+\midrule
+US Financials & 0.53 & 0.35 & 0.22 & \checkmark Confirmed \\
+US Technology & 0.36 & 0.43 & 0.29 & \checkmark Confirmed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both sectors exhibit higher CV when $\rho < 0.50$, confirming the threshold pattern holds out-of-sample.
+
+\textbf{Summary}: The conservatively reported threshold $\rho_c \approx 0.50$ falls within the bootstrap confidence interval $[0.45, 0.65]$, with the structural break confirmed at $p < 0.001$. This upgrades our claim from ``empirical observation'' to ``statistically validated regime transition.''
+
+\subsubsection{CV(H$_1$) Metric Robustness}
+
+We compare CV($H_1$) against alternative TDA stability metrics to validate our choice:
+
+\begin{table}[H]
+\centering
+\small
+\caption{Correlation with Mean $\rho$ (More Negative = Better Regime Tracking)}
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Metric} & \textbf{Correlation} & \textbf{p-value} & \textbf{Assessment} \\
+\midrule
+Wasserstein distance & $-0.38$ & $< 0.001$ & Best performer \\
+Bottleneck distance & $-0.32$ & $< 0.001$ & Strong \\
+\textbf{CV($H_1$)} & $-0.21$ & $0.023$ & \textbf{Significant} \\
+Persistence entropy & $+0.04$ & $0.69$ & Not useful \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Honest Assessment}: Wasserstein distance outperforms CV($H_1$) for regime tracking ($r = -0.38$ vs $r = -0.21$). However, CV($H_1$) remains statistically significant ($p = 0.023$) and offers practical advantages:
+\begin{itemize}
+    \item \textbf{Interpretability}: CV is a standard statistical measure with intuitive meaning
+    \item \textbf{Computational simplicity}: Single scalar vs diagram-to-diagram comparison
+    \item \textbf{Threshold applicability}: Natural connection to the $\rho_c$ boundary condition
+\end{itemize}
+
+For practitioners prioritizing regime detection accuracy over interpretability, Wasserstein distance may be preferred. Our results hold with either metric.
+
 \textbf{Figure 11.2} visualizes observed CV vs theoretical bound, showing excellent agreement.
 
 \subsection{Graph Laplacian Analysis}
