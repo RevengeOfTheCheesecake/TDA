@@ -52,6 +52,19 @@ Persistent homology analyzes topological features of correlation structure follo
 \item \textbf{Regime:} Classify as ``unstable'' if 30-day rolling CV exceeds 75th percentile
 \end{enumerate}
 
+\subsubsection{Formal Definition: Topology CV}
+
+\textbf{Definition (Topology CV):} Let $\{(b_i, d_i)\}_{i=1}^{n}$ be the birth-death pairs from an $H_1$ persistence diagram, where each pair represents a topological loop that appears at filtration value $b_i$ and disappears at $d_i$. The \textbf{persistence lifetimes} are $\ell_i = d_i - b_i$. We define the \textbf{Topology Coefficient of Variation} as:
+
+\begin{equation}
+\text{CV}(H_1) = \frac{\sigma(\ell)}{\mu(\ell)} = \frac{\sqrt{\frac{1}{n}\sum_{i=1}^n (\ell_i - \bar{\ell})^2}}{\frac{1}{n}\sum_{i=1}^n \ell_i}
+\label{eq:topology-cv}
+\end{equation}
+
+where $\bar{\ell} = \mu(\ell)$ is the mean lifetime. This metric quantifies the \textbf{temporal stability} of topological features: low CV indicates consistent loop structures across time windows; high CV indicates erratic topology that changes dramatically with small correlation perturbations.
+
+\textbf{Note:} This definition is specific to this study. The coefficient of variation is a standard statistical measure, but its application to $H_1$ persistence lifetimes as a stability metric for financial topology appears to be novel.
+
 \subsubsection{Mathematical Details}
 
 Convert correlation matrix to distance metric:
