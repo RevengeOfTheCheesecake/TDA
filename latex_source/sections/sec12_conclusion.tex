@@ -98,6 +98,32 @@ This inequality transforms the empirical correlation-stability relationship ($\r
 
 \textbf{Why Theory Matters}: Without Section 11, this thesis would be a collection of empirical backtests vulnerable to data-mining criticism. The theoretical bound \textbf{explains the mechanism}, transforming ``it works in backtests'' into ``it works because of spectral graph properties.''
 
+\subsection{What This Framework Does NOT Do}
+
+\begin{center}
+\fbox{\parbox{0.94\textwidth}{
+\textbf{Explicit Limitations and Non-Claims}
+
+To prevent misinterpretation, we explicitly state what this research does \textbf{not} demonstrate:
+
+\begin{enumerate}
+    \item \textbf{NOT a trading system}: This is a methodological study about \textit{when TDA works}, not a validated trading strategy ready for deployment
+
+    \item \textbf{NOT a directional predictor}: AUC $\approx 0.52$ confirms topology cannot predict price direction---it detects \textit{when} regimes shift, not \textit{which way} prices move
+
+    \item \textbf{NOT universal}: The $\rho_c \approx 0.50$ threshold is validated on US large-cap equities (2019--2024). It may not generalize to fixed income, commodities, emerging markets, or different time periods
+
+    \item \textbf{NOT low-latency}: Persistent homology computation requires $O(n^4)$ time. For real-time applications, the Fiedler value proxy is recommended
+
+    \item \textbf{NOT robust to small universes}: With $n < 15$ assets, correlation estimation noise dominates topological signal
+
+    \item \textbf{NOT independent of correlation estimation}: All results depend on correlation matrix quality. The Epps effect, non-stationarity, and estimation error propagate into topology
+\end{enumerate}
+
+\textbf{Appropriate use cases}: Risk overlays, regime monitoring, volatility timing, portfolio construction constraints---\textit{not} standalone alpha generation.
+}}
+\end{center}
+
 \subsection{Contribution to Knowledge}
 
 \subsubsection{Academic Contribution}
