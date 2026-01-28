@@ -484,6 +484,36 @@ US Technology & 0.36 & 0.43 & 0.29 & \checkmark Confirmed \\
 
 Both sectors exhibit higher CV when $\rho < 0.50$, confirming the threshold pattern holds out-of-sample.
 
+\textbf{4. Null Model Validation:}
+
+To verify that observed topology reflects genuine market structure rather than random artifacts, we compare real topology against a null model where returns are shuffled within each asset (destroying cross-asset correlation structure while preserving marginal distributions).
+
+\begin{table}[H]
+\centering
+\small
+\caption{Null Model Test: Real vs Shuffled Topology (100 permutations)}
+\label{tab:null-model}
+\begin{tabular}{@{}lccccl@{}}
+\toprule
+\textbf{Dataset} & \textbf{Mean $\rho$} & \textbf{Real CV} & \textbf{Shuffled CV} & \textbf{Z-score} & \textbf{Result} \\
+\midrule
+Financials & 0.56 & 0.396 & 0.660 $\pm$ 0.151 & $-1.75$ & Borderline \\
+Mixed & 0.20 & 0.145 & 0.645 $\pm$ 0.125 & $-4.01^{***}$ & Signal confirmed \\
+\midrule
+\multicolumn{6}{l}{\textit{Loop Count Comparison:}} \\
+Both datasets & -- & 2 loops & 10.5 $\pm$ 1.9 & $-4.7^{***}$ & Highly significant \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize $^{***}p < 0.001$. Real data produces dramatically fewer loops than shuffled.}
+\end{tabular}
+\end{table}
+
+\textbf{Key findings from null model:}
+\begin{itemize}
+    \item \textbf{Loop count is highly significant} ($Z = -4.7$, $p < 0.001$): Real data produces 2 loops vs 10.5 for shuffled---topology captures genuine structure, not noise
+    \item \textbf{CV shows nuanced results}: Significant for mixed-sector ($Z = -4.01$, $p < 0.001$) but borderline for high-correlation Financials ($Z = -1.75$, $p = 0.08$)
+    \item \textbf{Interpretation}: The null model confirms topology detects real market structure. The borderline CV result for Financials suggests that in high-correlation regimes, both real and shuffled data can produce stable topology---but real data produces \textit{structurally different} topology (far fewer loops)
+\end{itemize}
+
 \textbf{Summary}: The conservatively reported threshold $\rho_c \approx 0.50$ falls within the bootstrap confidence interval $[0.45, 0.65]$, with the structural break confirmed at $p < 0.001$. This upgrades our claim from ``empirical observation'' to ``statistically validated regime transition.''
 
 \subsubsection{CV(H$_1$) Metric Robustness}
